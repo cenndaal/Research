@@ -146,6 +146,45 @@ pre{background:#06100e;color:#9fe8d8;padding:20px 22px;border:1px solid var(--ca
   border-radius:12px;font-family:'JetBrains Mono',monospace;font-size:.74em;overflow-x:auto;
   white-space:pre-wrap;line-height:1.6}
 
+/* ---------- contact ---------- */
+.contact-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:26px}
+@media(max-width:900px){.contact-grid{grid-template-columns:1fr}}
+.contact-lede{font-size:.92em;color:var(--ink-dim);max-width:520px;margin-bottom:22px}
+.contact-title{font-family:'Sora';font-size:clamp(1.3em,2.6vw,1.8em);font-weight:800;letter-spacing:-.4px;line-height:1.2;margin-bottom:14px}
+.contact-title em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.contact-links{display:flex;flex-direction:column;gap:12px}
+.contact-link{display:flex;align-items:center;gap:12px;font-size:.88em;font-weight:600;color:var(--ink);
+  background:var(--bg2);border:1px solid var(--card-edge);border-radius:12px;padding:13px 16px;transition:.2s}
+a.contact-link:hover{border-color:rgba(45,212,191,.45);color:var(--teal);transform:translateX(4px)}
+.contact-link-icon{width:34px;height:34px;border-radius:10px;background:rgba(45,212,191,.1);
+  border:1px solid rgba(45,212,191,.25);display:grid;place-items:center;font-size:1em;flex:none}
+.contact-form{background:var(--bg2);border:1px solid var(--card-edge);border-radius:14px;padding:24px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:640px){.form-row{grid-template-columns:1fr}}
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:.68em;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:7px}
+.form-group input,.form-group textarea{width:100%;background:var(--card);color:var(--ink);border:1px solid var(--card-edge);
+  border-radius:10px;padding:11px 13px;font-family:'Manrope';font-size:.9em;outline:none;transition:.2s}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(45,212,191,.12)}
+.form-group textarea{min-height:120px;resize:vertical}
+.form-group .err{display:none;font-size:.74em;color:var(--coral);margin-top:5px;font-weight:600}
+.form-group.error input,.form-group.error textarea{border-color:var(--coral)}
+.form-group.error .err{display:block}
+.submit-btn{font-family:'Sora';font-weight:700;font-size:.9em;color:#06231f;background:var(--grad);
+  border:none;border-radius:99px;padding:13px 30px;cursor:pointer;transition:.2s;display:inline-flex;align-items:center;gap:8px}
+.submit-btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.submit-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.form-status{display:none;margin-top:14px;padding:12px 16px;border-radius:10px;font-size:.84em;font-weight:600;border:1px solid}
+.form-status.show{display:block}
+.form-status.ok{color:var(--go);background:rgba(52,211,153,.08);border-color:rgba(52,211,153,.3)}
+.form-status.bad{color:var(--nogo);background:rgba(251,113,133,.08);border-color:rgba(251,113,133,.3)}
+.back-top{position:fixed;right:22px;bottom:22px;width:44px;height:44px;border-radius:12px;background:var(--grad);
+  color:#06231f;font-size:1.15em;font-weight:800;display:grid;place-items:center;box-shadow:var(--shadow);
+  border:none;cursor:pointer;opacity:0;pointer-events:none;transition:.25s;z-index:60}
+.back-top.show{opacity:1;pointer-events:auto}
+.back-top:hover{transform:translateY(-3px)}
+footer .foot-top{display:inline-block;margin-top:10px;font-weight:700;color:var(--teal)}
+
 footer{text-align:center;padding:30px 20px 40px;font-size:.78em;color:var(--ink-faint);border-top:1px solid var(--card-edge);margin-top:20px}
 footer b{color:var(--ink-dim)}
 </style>
@@ -167,6 +206,7 @@ footer b{color:var(--ink-dim)}
       <a href="#results">Results</a>
       <a href="#figures">Figures</a>
       <a href="#reports">Reports</a>
+      <a href="#contact">Contact</a>
     </nav>
   </div>
 </div>
@@ -513,11 +553,61 @@ Thresholds: ≥0.70 GO AHEAD | 0.50–0.70 REVIEW | <0.50 NO GO
     </details>
   </div>
 
+
+  <!-- Contact -->
+  <div class="section" id="contact">
+    <div class="sec-head"><span class="tag">08</span><h2>Contact</h2><span class="hint">Advisory · Research Collaboration . Building Dashboards</span></div>
+    <div class="contact-grid">
+      <div>
+        <div class="contact-title">Let's Build Something <em>Together</em></div>
+        <p class="contact-lede">I'm open to discuss more about the research, advisory engagements, and research collaborations across
+          New Zealand, Australia, and remote. Whether it's Compliance and Governance transformation, Building Strategy, AI governance
+          or new learning &mdash; I'd love to hear from you.</p>
+        <div class="contact-links">
+          <a href="mailto:saadhusan@hotmail.com" class="contact-link" id="contact-email-link">
+            <span class="contact-link-icon" aria-hidden="true">📧</span>saadhusan@hotmail.com</a>
+          <a href="https://linkedin.com/in/saadhussain" target="_blank" rel="noopener" class="contact-link">
+            <span class="contact-link-icon" aria-hidden="true">💼</span>linkedin.com/in/saadhussain</a>
+          <span class="contact-link"><span class="contact-link-icon" aria-hidden="true">📍</span>Auckland, New Zealand</span>
+        </div>
+      </div>
+      <form class="contact-form" id="contact-form" novalidate>
+        <div class="form-row">
+          <div class="form-group" id="fg-name">
+            <label for="c-name">Your Name</label>
+            <input type="text" id="c-name" name="name" placeholder="Jane Smith" autocomplete="name" required>
+            <div class="err">Please enter your name</div>
+          </div>
+          <div class="form-group" id="fg-email">
+            <label for="c-email">Email</label>
+            <input type="email" id="c-email" name="email" placeholder="you@company.com" autocomplete="email" required>
+            <div class="err">Please enter a valid email</div>
+          </div>
+        </div>
+        <div class="form-group" id="fg-subject">
+          <label for="c-subject">Subject</label>
+          <input type="text" id="c-subject" name="subject" placeholder="What's this about?" required>
+          <div class="err">Please enter a subject</div>
+        </div>
+        <div class="form-group" id="fg-message">
+          <label for="c-message">Message</label>
+          <textarea id="c-message" name="message" placeholder="Tell me about your project, role or idea..." required></textarea>
+          <div class="err">Please enter a message</div>
+        </div>
+        <button type="submit" class="submit-btn" id="submit-btn">Send Message <span aria-hidden="true">→</span></button>
+        <div class="form-status ok" id="form-success">✓ Message sent successfully! I'll get back to you within 24 hours.</div>
+        <div class="form-status bad" id="form-error">⚠ Something went wrong while sending your message. Please try again or email me directly.</div>
+      </form>
+    </div>
+  </div>
+
 </div>
 
 <footer>
-  CPUS Framework Pipeline v1.1 &nbsp;|&nbsp; © 2026 All rights reserved by <b>Saad Hussain (20251415)</b>
+  CPUS Framework Pipeline v1.1 &nbsp;|&nbsp; © 2025 <b>Saad Hussain (20251415)</b>. Created in the spirit of continuous learning — as always :)
+  <br><a href="#top" class="foot-top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">↑ Back to top</a>
 </footer>
+<button class="back-top" id="backTop" aria-label="Back to top">↑</button>
 
 <script>
 const DATA = [{"dataset": "MIMIC_SYN", "model": "Bootstrap", "eps": 0.0892, "mia": 0.3855, "jsd": 0.0293, "tstr": 0.51, "cpus": 0.7663, "risk": "Low Risk", "decision": "GO AHEAD"}, {"dataset": "MIMIC_SYN", "model": "GaussianCopula", "eps": 0.2687, "mia": 0.6178, "jsd": 0.0569, "tstr": 0.5, "cpus": 0.6839, "risk": "Moderate Risk", "decision": "REVIEW"}, {"dataset": "MIMIC_SYN", "model": "TabDDPM", "eps": 0.0865, "mia": 0.9572, "jsd": 0.1493, "tstr": 0.4925, "cpus": 0.5893, "risk": "Moderate Risk", "decision": "REVIEW"}, {"dataset": "MIMIC_SYN", "model": "CTGAN", "eps": 1.4328, "mia": 0.9074, "jsd": 0.1599, "tstr": 0.4775, "cpus": 0.4831, "risk": "High Risk", "decision": "NO GO"}, {"dataset": "MIMIC_SYN", "model": "TVAE", "eps": 2.7495, "mia": 0.9634, "jsd": 0.2258, "tstr": 0.485, "cpus": 0.3448, "risk": "High Risk", "decision": "NO GO"}, {"dataset": "Synthea", "model": "Bootstrap", "eps": 0.0205, "mia": 0.4894, "jsd": 0.0077, "tstr": 1.0, "cpus": 0.874, "risk": "Low Risk", "decision": "GO AHEAD"}, {"dataset": "Synthea", "model": "GaussianCopula", "eps": 0.0184, "mia": 0.8679, "jsd": 0.0451, "tstr": 0.9649, "cpus": 0.7614, "risk": "Low Risk", "decision": "GO AHEAD"}, {"dataset": "Synthea", "model": "TVAE", "eps": 0.2945, "mia": 0.7705, "jsd": 0.0992, "tstr": 0.9717, "cpus": 0.751, "risk": "Low Risk", "decision": "GO AHEAD"}, {"dataset": "Synthea", "model": "CTGAN", "eps": 0.5748, "mia": 0.8475, "jsd": 0.0948, "tstr": 0.9021, "cpus": 0.692, "risk": "Moderate Risk", "decision": "REVIEW"}, {"dataset": "Synthea", "model": "TabDDPM", "eps": 0.0522, "mia": 0.9953, "jsd": 0.2857, "tstr": 0.9819, "cpus": 0.6709, "risk": "Moderate Risk", "decision": "REVIEW"}, {"dataset": "UCI_Adult", "model": "Bootstrap", "eps": 0.0606, "mia": 0.4791, "jsd": 0.0069, "tstr": 0.8573, "cpus": 0.8378, "risk": "Low Risk", "decision": "GO AHEAD"}, {"dataset": "UCI_Adult", "model": "CTGAN", "eps": 0.2655, "mia": 0.9325, "jsd": 0.0962, "tstr": 0.8279, "cpus": 0.6777, "risk": "Moderate Risk", "decision": "REVIEW"}, {"dataset": "UCI_Adult", "model": "TabDDPM", "eps": 0.152, "mia": 1.0, "jsd": 0.3184, "tstr": 0.85, "cpus": 0.6202, "risk": "Moderate Risk", "decision": "REVIEW"}, {"dataset": "UCI_Adult", "model": "TVAE", "eps": 0.9539, "mia": 0.9595, "jsd": 0.1497, "tstr": 0.827, "cpus": 0.5999, "risk": "Moderate Risk", "decision": "REVIEW"}, {"dataset": "UCI_Adult", "model": "GaussianCopula", "eps": 1.4008, "mia": 0.9981, "jsd": 0.1651, "tstr": 0.7578, "cpus": 0.5319, "risk": "Moderate Risk", "decision": "REVIEW"}];
@@ -805,6 +895,55 @@ const barColor = c => c>=0.7 ? C.go : c>=0.5 ? C.rev : C.nogo;
 
 renderStudio();
 renderScheme();
+
+/* ===================== CONTACT FORM ===================== */
+(function(){
+  const form=document.getElementById('contact-form');
+  if(!form)return;
+  const fs=document.getElementById('form-success');
+  const fe=document.getElementById('form-error');
+  const defaultFormError=fe.textContent;
+  function showFormError(msg){fe.textContent=msg;fe.classList.add('show');}
+  function vf(groupId,inputId,test){
+    const g=document.getElementById(groupId),v=document.getElementById(inputId).value.trim();
+    const valid=test(v);g.classList.toggle('error',!valid);return valid;
+  }
+  form.addEventListener('submit',async e=>{
+    e.preventDefault();
+    let ok=true;
+    ok=vf('fg-name','c-name',v=>v.length>0)&&ok;
+    ok=vf('fg-email','c-email',v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v))&&ok;
+    ok=vf('fg-subject','c-subject',v=>v.length>0)&&ok;
+    ok=vf('fg-message','c-message',v=>v.length>0)&&ok;
+    if(!ok)return;
+    const b=document.getElementById('submit-btn');
+    b.textContent='Sending...';b.disabled=true;fs.classList.remove('show');fe.classList.remove('show');
+    try{
+      const payload={
+        access_key:'e71e4cb7-1143-4d65-90b4-8a16a4e26671',
+        name:document.getElementById('c-name').value.trim(),
+        email:document.getElementById('c-email').value.trim(),
+        subject:document.getElementById('c-subject').value.trim(),
+        message:document.getElementById('c-message').value.trim(),
+        from_name:'Portfolio Contact Form'
+      };
+      const r=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)});
+      const res=await r.json();
+      if(!res.success)throw new Error(res.message||'submit_failed');
+      form.reset();document.querySelectorAll('.form-group').forEach(g=>g.classList.remove('error'));
+      fs.classList.add('show');setTimeout(()=>fs.classList.remove('show'),5000);
+    }catch(err){
+      console.error(err);
+      const msg=err&&err.message&&err.message!=='submit_failed'?`Message could not be sent: ${err.message}. Please try again.`:defaultFormError;
+      showFormError(msg);
+    }finally{b.innerHTML='Send Message <span aria-hidden="true">→</span>';b.disabled=false}
+  });
+  document.querySelectorAll('.form-group input,.form-group textarea').forEach(i=>i.addEventListener('input',()=>i.closest('.form-group').classList.remove('error')));
+
+  const bt=document.getElementById('backTop');
+  window.addEventListener('scroll',()=>bt.classList.toggle('show',window.scrollY>600),{passive:true});
+  bt.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+})();
 </script>
 </body>
 </html>
