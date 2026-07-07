@@ -97,6 +97,65 @@ a{color:var(--teal);text-decoration:none}
 .rev{background:rgba(251,191,36,.08);color:var(--rev);border-color:rgba(251,191,36,.3)}
 .nogo{background:rgba(251,113,133,.08);color:var(--nogo);border-color:rgba(251,113,133,.3)}
 
+/* ---------- CPUS WORKFLOW ANIMATED SECTION ---------- */
+.wf-container { display: flex; flex-direction: column; align-items: center; gap: 20px; padding: 20px 0; font-family: 'Manrope', sans-serif; }
+.wf-block { background: var(--bg2); border: 1px solid var(--card-edge); border-radius: 12px; padding: 14px 24px; text-align: center; min-width: 280px; box-shadow: var(--shadow); position: relative; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+.wf-block h4 { font-family: 'Sora'; font-size: 0.88em; color: var(--teal); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; transition: text-shadow 0.4s ease; }
+.wf-block p { font-size: 0.8em; color: var(--ink-dim); }
+
+/* Automated Active Pipeline Glow Engine states */
+.wf-block.processing-active {
+  border-color: var(--teal);
+  background: color-mix(in srgb, var(--teal) 8%, var(--bg2));
+  transform: scale(1.02) translateY(-2px);
+  box-shadow: 0 0 30px rgba(45, 212, 191, 0.35), inset 0 0 12px rgba(45, 212, 191, 0.15);
+}
+.wf-block.processing-active h4 {
+  text-shadow: 0 0 8px var(--teal);
+}
+
+.wf-connector { width: 2px; height: 30px; background: rgba(255, 255, 255, 0.08); position: relative; overflow: hidden; transition: background-color 0.4s; }
+.wf-connector.pulse-active::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, transparent, var(--teal), var(--sky), transparent); animation: laserDrop 0.8s infinite linear; }
+
+.wf-parallel-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; width: 100%; max-width: 900px; position: relative; }
+@media(max-width: 768px) { .wf-parallel-grid { grid-template-columns: 1fr; } .wf-fork-svg { display: none !important; } .wf-connector-mobile { display: block !important; } }
+.wf-metric-card { background: color-mix(in srgb, var(--card) 60%, transparent); border: 1px solid var(--card-edge); border-radius: 10px; padding: 12px 10px; text-align: center; display: flex; flex-direction: column; gap: 4px; position: relative; transition: all 0.4s ease; }
+.wf-metric-card span { font-family: 'JetBrains Mono'; font-size: 0.85em; font-weight: 600; color: var(--ink); }
+.wf-metric-card label { font-size: 0.68em; color: var(--ink-faint); text-transform: uppercase; font-weight: 700; }
+
+.wf-parallel-grid.processing-active .wf-metric-card {
+  border-color: var(--sky);
+  background: color-mix(in srgb, var(--sky) 6%, var(--card));
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+}
+
+.wf-fork-container { width: 100%; max-width: 900px; height: 30px; position: relative; }
+.wf-fork-svg { width: 100%; height: 100%; fill: none; stroke: rgba(255,255,255,0.08); stroke-width: 2; transition: stroke 0.4s; }
+.wf-fork-svg.pulse-active { stroke: url(#grad-conduit); stroke-dasharray: 8 5; animation: dashFlow 25s infinite linear; filter: drop-shadow(0 0 4px var(--sky)); }
+
+.wf-decision-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; width: 100%; max-width: 800px; transition: all 0.4s ease; }
+@media(max-width: 600px) { .wf-decision-row { grid-template-columns: 1fr; } }
+.wf-dec-box { padding: 12px; border-radius: 10px; font-size: 0.8em; text-align: center; font-weight: 700; border: 1px solid; opacity: 0.4; filter: saturate(0.4); transition: all 0.4s ease; }
+.wf-dec-box small { display: block; font-weight: 500; font-size: 0.85em; opacity: 0.8; margin-top: 2px; }
+.wf-dec-go { background: rgba(52,211,153,.06); color: var(--go); border-color: rgba(52,211,153,.25); }
+.wf-dec-rev { background: rgba(251,191,36,.05); color: var(--rev); border-color: rgba(251,191,36,.25); }
+.wf-dec-nogo { background: rgba(251,113,133,.05); color: var(--nogo); border-color: rgba(251,113,133,.25); }
+
+.wf-decision-row.processing-active .wf-dec-box { opacity: 1; filter: saturate(1); }
+.wf-decision-row.processing-active .wf-dec-go { border-color: var(--go); box-shadow: 0 0 15px rgba(52,211,153,0.3); }
+.wf-decision-row.processing-active .wf-dec-rev { border-color: var(--rev); box-shadow: 0 0 15px rgba(251,191,36,0.3); }
+.wf-decision-row.processing-active .wf-dec-nogo { border-color: var(--nogo); box-shadow: 0 0 15px rgba(251,113,133,0.3); }
+
+.wf-breakdown-details { width: 100%; max-width: 900px; margin-top: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left; }
+@media(max-width:768px) { .wf-breakdown-details { grid-template-columns: 1fr; } }
+.wf-breakdown-details ul { padding-left: 18px; font-size: 0.84em; color: var(--ink-dim); }
+.wf-breakdown-details li { margin-bottom: 6px; line-height: 1.45; }
+.wf-breakdown-details b { color: var(--ink); }
+
+@keyframes laserDrop { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
+@keyframes dashFlow { to { stroke-dashoffset: -1000; } }
+
 /* ---------- KPI cards ---------- */
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
 .kpi{background:var(--bg2);border:1px solid var(--card-edge);border-radius:14px;padding:18px 18px 16px;position:relative;overflow:hidden}
@@ -132,7 +191,7 @@ select:focus{border-color:var(--teal)}
 /* ---------- chart grid ---------- */
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:26px}
 @media(max-width:980px){.grid2{grid-template-columns:1fr}}
-.panel{background:var(--bg2);border:1px solid var(--card-edge);border-radius:14px;padding:20px}
+.panel{background:var(--bg2);border:1px solid var(--card-edge);border-radius:14px;padding:20px;position:relative;}
 .panel h3{font-size:.92em;font-weight:700;margin-bottom:4px}
 .panel .sub{font-size:.74em;color:var(--ink-faint);margin-bottom:14px}
 .panel canvas{max-height:330px}
@@ -192,7 +251,6 @@ a.contact-link:hover{border-color:rgba(45,212,191,.45);color:var(--teal);transfo
 .contact-form{background:var(--bg2);border:1px solid var(--card-edge);border-radius:14px;padding:24px}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:640px){.form-row{grid-template-columns:1fr}}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .form-group{margin-bottom:14px}
 .form-group label{display:block;font-size:.68em;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:7px}
 .form-group input,.form-group textarea{width:100%;background:var(--card);color:var(--ink);border:1px solid var(--card-edge);
@@ -325,6 +383,11 @@ footer b{color:var(--ink-dim)}
   font-size: 0.8em;
   cursor: pointer;
   z-index: 10;
+  transition: all 0.2s ease;
+}
+.dashboard-popup-overlay:hover {
+  background: var(--teal);
+  color: #06231f;
 }
 .dashboard-popup-content {
   display: none;
@@ -345,6 +408,43 @@ footer b{color:var(--ink-dim)}
 .dashboard-popup-content.active {
   display: block;
 }
+
+/* Metadata Styles */
+.meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 16px;
+}
+.meta-box {
+  background: var(--bg2);
+  border: 1px solid var(--card-edge);
+  border-radius: 12px;
+  padding: 20px;
+}
+.meta-box h3 {
+  font-size: 1.05em;
+  color: var(--teal);
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+.meta-box p {
+  font-size: 0.88em;
+  color: var(--ink-dim);
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+.meta-box ul {
+  padding-left: 20px;
+  font-size: 0.85em;
+  color: var(--ink-dim);
+}
+.meta-box li {
+  margin-bottom: 6px;
+}
+.meta-box b {
+  color: var(--ink);
+}
 </style>
 </head>
 <body>
@@ -358,6 +458,8 @@ footer b{color:var(--ink-dim)}
     </div>
     <nav class="topnav">
       <a href="#formula">Formula</a>
+      <a href="#workflow">Workflow</a>
+      <a href="#datasets">Datasets</a>
       <a href="#summary">Summary</a>
       <a href="#studio">Chart Studio</a>
       <a href="#analytics">Analytics</a>
@@ -380,7 +482,7 @@ footer b{color:var(--ink-dim)}
 <div class="hero">
   <h1>Synthetic Data <em>Privacy &amp; Utility</em> Governance</h1>
   <p>Interactive risk-action dashboard for the CPUS framework — evaluating 5 generative models across 3 datasets
-     under 4 weighting schemes, against GDPR Recital 26 and NZ Privacy Act 2020 IPP10.</p>
+      under 4 weighting schemes, against GDPR Recital 26 and NZ Privacy Act 2020 IPP10.</p>
   <div class="chips">
     <span class="chip"><b>Author</b> &nbsp;Saad Hussain (20251415)</span>
     <span class="chip"><b>Institution</b> &nbsp;Whitecliffe School of IT · IT9115</span>
@@ -390,8 +492,53 @@ footer b{color:var(--ink-dim)}
 
 <div class="wrap">
 
+  <div class="section" id="datasets">
+    <div class="sec-head"><span class="tag">01</span><h2>Dataset Profiles &amp; Research Pedigree</h2><span class="hint">Core evaluation environments and benchmark history</span></div>
+    <p style="font-size:.9em;color:var(--ink-dim)">
+      The CPUS framework evaluates model stability across three fundamentally distinct tabular domains. This variety ensures comprehensive testing against demographic, intensive care clinical signatures, and synthetic population systems.
+    </p>
+    <div class="meta-grid">
+      <div class="meta-box">
+        <h3>1. UCI Adult Dataset</h3>
+        <p><b>Summary &amp; Characteristics:</b> Known as the "Census Income" dataset, containing 48,842 records with 14 demographics-driven variables including age, education, marital status, and occupation. The target is a binary classification predicting if an annual income exceeds $50K.</p>
+        <p><b>Count &amp; Dimensions:</b> 48,842 total instances (32,561 training, 16,281 testing splits); 14 columns consisting of 6 continuous scales and 8 high-cardinality categorical variables.</p>
+        <p><b>Parameters:</b> Age, Workclass, Fnlwgt, Education, Education-num, Marital-status, Occupation, Relationship, Race, Sex, Capital-gain, Capital-loss, Hours-per-week, Native-country.</p>
+        <p><b>Legends Summary:</b> Main categorical target variable is <code>income</code>, where 0 represents <code>&lt;=50K</code> (approx. 75.9% base frequency) and 1 represents <code>&gt;50K</code> (approx. 24.1% base frequency).</p>
+        <p><b>Publisher &amp; Origin:</b> Derived from the 1994 Current Population Survey by the US Census Bureau, extracted and published by Ronny Kohavi and Barry Becker via the UCI Machine Learning Repository (1996).</p>
+        <ul>
+          <li><b>Prior Use Case:</b> Serving as an foundational ecosystem for algorithmic fairness benchmarks.</li>
+          <li><b>Privacy Context:</b> Extensively utilized to test joint distribution recreation and Differential Privacy (DP) limits on tabular structures.</li>
+        </ul>
+      </div>
+      <div class="meta-box">
+        <h3>2. MIMIC-III Critical Care</h3>
+        <p><b>Summary &amp; Characteristics:</b> A large-scale, de-identified electronic health records database covering over 40,000 distinct critical care patient stays. Features dense, high-dimensional profiles containing vital signs, laboratory tests, drip rates, and diagnostic codes.</p>
+        <p><b>Count &amp; Dimensions:</b> 46,520 individual patient stay trajectories across 58,976 hospital admissions. Standard tabular benchmarking extract uses ~40,000 cohort matrices across 25 core health dimensions.</p>
+        <p><b>Parameters:</b> Demographics (Gender, Age, Ethnicity), Administrative (Admission Type, First Care Unit), Vitals (Heart Rate, Blood Pressure, Respiration Rate, SpO2), and Laboratory markers (White Blood Cell Count, Hemoglobin, Platelets, Creatinine, Glucose).</p>
+        <p><b>Legends Summary:</b> Primary clinical prediction target is <code>hospital_expire_flag</code> (0 = Discharged Survived, 1 = Expired In-Hospital). Secondary variables follow specific dictionary maps (e.g., Care Units coded as MICU, SICU, CCU, CSRU).</p>
+        <p><b>Publisher &amp; Origin:</b> Curated and hosted by the MIT Laboratory for Computational Physiology alongside Beth Israel Deaconess Medical Center, funded via the NIH (2016).</p>
+        <ul>
+          <li><b>Prior Use Case:</b> The standard framework for predicting patient mortality trajectories and ICU stay lengths.</li>
+          <li><b>Privacy Context:</b> Poses extreme privacy risks due to trace uniqueness, serving as an ideal environment for testing robust inference resistance models.</li>
+        </ul>
+      </div>
+      <div class="meta-box">
+        <h3>3. Synthea Simulation</h3>
+        <p><b>Summary &amp; Characteristics:</b> An agent-driven synthetic generator outputting realistic, continuous medical records spanning lifecycle events. Formatted into synthetic patients with clean joint dependencies across diseases, procedures, and visits.</p>
+        <p><b>Count &amp; Dimensions:</b> Standard configuration dataset of 10,000 generated synthetic patient lifecycle histories, mapping structural matrices across 22 complex fields.</p>
+        <p><b>Parameters:</b> Patient Info (Birthdate, Deathdate, Gender, Race, Ethnicity, Marital Status), Geographic Vectors (City, State, Zip), Financial Tracks (Healthcare Expenses, Insurance Coverage), and Clinical Identifiers (SNOMED-CT Diagnosis Codes, RxNorm Medication Codes).</p>
+        <p><b>Legends Summary:</b> Built-in discrete categorical lookups map fields like Gender (M, F), Marital Status (S, M), Race (White, Black, Asian, Native), and clinical codes following strict systemic medical dictionaries.</p>
+        <p><b>Publisher &amp; Origin:</b> Developed and published as an open-source health framework by the MITRE Corporation (2017) to provide high-quality data free from HIPAA constraints.</p>
+        <ul>
+          <li><b>Prior Use Case:</b> Evaluating Health IT systems, large-scale FHIR sandboxes, and epidemiological progress modeling.</li>
+          <li><b>Privacy Context:</b> Used in generative modeling research as a mathematically closed rule-base to observe if models learn underlying distributions without overfitting.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
   <div class="section" id="formula">
-    <div class="sec-head"><span class="tag">01</span><h2>CPUS Formula</h2></div>
+    <div class="sec-head"><span class="tag">02</span><h2>CPUS Formula</h2></div>
     <div class="formula">
       CPUS = <span class="w">w<sub>ε</sub></span>·(1 − <span class="m">ε̂<sub>norm</sub></span>)
       + <span class="w">w<sub>mia</sub></span>·(1 − <span class="m">MIA_AUC</span>)
@@ -409,8 +556,162 @@ footer b{color:var(--ink-dim)}
     </div>
   </div>
 
+  <div class="section" id="workflow">
+    <div class="sec-head"><span class="tag">02b</span><h2>CPUS Operational Workflow &amp; Compliance Pipeline</h2><span class="hint">End-to-end generative testing architecture</span></div>
+    <p style="font-size:.9em;color:var(--ink-dim);margin-bottom:15px;">
+      This execution pipeline dynamically maps how raw datasets flow through generative architectures, undergo parallel analytical isolation layers, scale down via structural weighting schemas, and ultimately trigger strategic regulatory actions.
+    </p>
+    
+    <div class="wf-container" id="pipelineContainer">
+      <div class="wf-block" id="wf-step-1">
+        <h4>1. Raw Tabular Ingestion Matrix</h4>
+        <p>Ecosystem Baselines: UCI Adult Dataset · MIMIC-III Clinical Care · Synthea Simulation</p>
+      </div>
+      
+      <div class="wf-connector" id="wf-con-1"></div>
+      
+      <div class="wf-block" id="wf-step-2">
+        <h4>2. Generative Synthesizer Pipelines</h4>
+        <p>Deep Architectural Vectors: Bootstrap · TabDDPM · TVAE · CTGAN · GaussianCopula</p>
+      </div>
+      
+      <div class="wf-fork-container">
+        <svg class="wf-fork-svg" id="wf-fork-3" viewBox="0 0 900 30" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="grad-conduit" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="var(--teal)" />
+              <stop offset="50%" stop-color="var(--sky)" />
+              <stop offset="100%" stop-color="var(--violet)" />
+            </linearGradient>
+          </defs>
+          <path d="M 450,0 Q 450,15 112.5,15 L 112.5,30 M 450,0 Q 450,15 337.5,15 L 337.5,30 M 450,0 Q 450,15 562.5,15 L 562.5,30 M 450,0 Q 450,15 787.5,15 L 787.5,30" />
+        </svg>
+        <div class="wf-connector wf-connector-mobile" id="wf-con-3-mobile" style="display:none; margin:0 auto;"></div>
+      </div>
+      
+      <div class="wf-parallel-grid" id="wf-step-3">
+        <div class="wf-metric-card">
+          <label>🔒 DP Privacy</label>
+          <span>1 − ε̂<sub>norm</sub></span>
+          <p style="font-size:0.75em; color:var(--ink-faint);">Shadow bounding attacks calculating leakage profiles.</p>
+        </div>
+        <div class="wf-metric-card">
+          <label>⚔️ MIA Resistance</label>
+          <span>1 − MIA_AUC</span>
+          <p style="font-size:0.75em; color:var(--ink-faint);">GBT adversarial networks testing identity trace linkage.</p>
+        </div>
+        <div class="wf-metric-card">
+          <label>📊 Statistical Fidelity</label>
+          <span>1 − JSD</span>
+          <p style="font-size:0.75em; color:var(--ink-faint);">Jensen-Shannon evaluations parsing marginal distribution shift.</p>
+        </div>
+        <div class="wf-metric-card">
+          <label>🤖 ML Utility Signature</label>
+          <span>TSTR Accuracy</span>
+          <p style="font-size:0.75em; color:var(--ink-faint);">Random Forest validation verifying signal preservation.</p>
+        </div>
+      </div>
+      
+      <div class="wf-connector" id="wf-con-3"></div>
+      
+      <div class="wf-block" id="wf-step-4">
+        <h4>4. Dynamic Weight Resolution Framework</h4>
+        <p>Operational Focus Profiles: Balanced (0.25 ea.) · Privacy-Heavy · Utility-Heavy · Fidelity-Heavy</p>
+      </div>
+      
+      <div class="wf-connector" id="wf-con-4"></div>
+      
+      <div class="wf-block" id="wf-step-5" style="border-color:var(--violet);">
+        <h4>5. Legal Compliance Decision Engine</h4>
+        <p>Validating aggregate scores against global cross-border privacy boundaries</p>
+      </div>
+      
+      <div class="wf-decision-row" id="wf-step-6">
+        <div class="wf-dec-box wf-dec-go">
+          🟢 CPUS ≥ 0.70 · GO AHEAD
+          <small>Meets GDPR Recital 26 / NZPA IPP10 anonymity parameters. Safe open publishing.</small>
+        </div>
+        <div class="wf-dec-box wf-dec-rev">
+          🟡 0.50 – 0.69 · PIA REVIEW
+          <small>Requires formal human-in-the-loop Privacy Officer risk sign-off &amp; context override.</small>
+        </div>
+        <div class="wf-dec-box wf-dec-nogo">
+          🔴 CPUS &lt; 0.50 · NO GO
+          <small>Critical alignment failure. High re-identification leakage danger. Release Denied.</small>
+        </div>
+      </div>
+    </div>
+    
+<div class="wf-breakdown-details" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; width: 100% !important; max-width: none !important; margin-top: 24px; box-sizing: border-box;">
+      
+      <div style="display: flex; flex-direction: column; gap: 16px; width: 100% !important; max-width: none !important; box-sizing: border-box;">
+        <h3 style="font-family:'Sora'; font-size:0.95em; color:var(--teal); letter-spacing: 0.5px; border-bottom: 1px solid var(--card-edge); padding-bottom: 8px; margin: 0 0 4px 0; text-transform: uppercase; width: 100%;">
+          Pipeline Mechanics &amp; Ingestion
+        </h3>
+        
+        <div style="background: var(--bg2); border: 1px solid var(--card-edge); border-left: 3px solid var(--teal); border-radius: 10px; padding: 18px; box-shadow: var(--shadow); box-sizing: border-box; width: 100%; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; gap: 10px;">
+              <strong style="font-size: 0.88em; color: var(--ink); font-weight: 700;">Multi-Objective Isolation</strong>
+              <span style="font-family: 'JetBrains Mono'; font-size: 0.65em; background: rgba(45,212,191,0.1); color: var(--teal); padding: 2px 6px; border-radius: 4px; font-weight: 600; flex-shrink: 0;">CONCURRENCY</span>
+            </div>
+            <p style="font-size: 0.82em; color: var(--ink-dim); line-height: 1.5; margin: 0;">
+              The processing system sandboxes architectural evaluations into independent calculation threads. This ensures optimization loops for statistical fidelity (such as deep marginal distribution adjustments) do not unintentionally expand privacy attack surfaces or increase membership inference leakage vulnerability vectors.
+            </p>
+          </div>
+        </div>
+
+        <div style="background: var(--bg2); border: 1px solid var(--card-edge); border-left: 3px solid var(--teal); border-radius: 10px; padding: 18px; box-shadow: var(--shadow); box-sizing: border-box; width: 100%; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; gap: 10px;">
+              <strong style="font-size: 0.88em; color: var(--ink); font-weight: 700;">Normalization Realization</strong>
+              <span style="font-family: 'JetBrains Mono'; font-size: 0.65em; background: rgba(45,212,191,0.1); color: var(--teal); padding: 2px 6px; border-radius: 4px; font-weight: 600; flex-shrink: 0;">COMPRESSION</span>
+            </div>
+            <p style="font-size: 0.82em; color: var(--ink-dim); line-height: 1.5; margin: 0 0 12px 0;">
+              Raw empirical privacy data leakage thresholds can scale indefinitely. To protect composite scalar scoring stability, upper boundaries are mathematically bound and standard-scaled via an automated bounding operation:
+            </p>
+          </div>
+          <div style="font-family: 'JetBrains Mono'; font-size: 0.8em; color: var(--teal); background: rgba(0,0,0,0.2); padding: 8px 12px; border-radius: 6px; text-align: center; border: 1px solid rgba(45,212,191,0.15); font-weight: 600; letter-spacing: 0.5px; width: 100%; box-sizing: border-box;">
+            ε̂_norm = MIN(ε̂_raw / 3.0, 1.0)
+          </div>
+        </div>
+      </div>
+      
+      <div style="display: flex; flex-direction: column; gap: 16px; width: 100% !important; max-width: none !important; box-sizing: border-box;">
+        <h3 style="font-family:'Sora'; font-size:0.95em; color:var(--sky); letter-spacing: 0.5px; border-bottom: 1px solid var(--card-edge); padding-bottom: 8px; margin: 0 0 4px 0; text-transform: uppercase; width: 100%;">
+          Governance &amp; Accountability
+        </h3>
+        
+        <div style="background: var(--bg2); border: 1px solid var(--card-edge); border-left: 3px solid var(--sky); border-radius: 10px; padding: 18px; box-shadow: var(--shadow); box-sizing: border-box; width: 100%; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; gap: 10px;">
+              <strong style="font-size: 0.88em; color: var(--ink); font-weight: 700;">Anonymization Engineering</strong>
+              <span style="font-family: 'JetBrains Mono'; font-size: 0.65em; background: rgba(56,189,248,0.1); color: var(--sky); padding: 2px 6px; border-radius: 4px; font-weight: 600; flex-shrink: 0;">GDPR REC. 26</span>
+            </div>
+            <p style="font-size: 0.82em; color: var(--ink-dim); line-height: 1.5; margin: 0;">
+              Establishes rigorous defensibility criteria. If an adversarial evaluation model identifies specific training trajectories with high validation accuracy (<span style="font-family:'JetBrains Mono'; color:var(--sky); font-weight:600;">MIA_AUC &gt; 0.60</span>), the dataset fails to satisfy strict regulatory re-identification definitions, triggering an automatic requirement for differential privacy noise injection passes.
+            </p>
+          </div>
+        </div>
+
+        <div style="background: var(--bg2); border: 1px solid var(--card-edge); border-left: 3px solid var(--sky); border-radius: 10px; padding: 18px; box-shadow: var(--shadow); box-sizing: border-box; width: 100%; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; gap: 10px;">
+              <strong style="font-size: 0.88em; color: var(--ink); font-weight: 700;">Regulatory Verification</strong>
+              <span style="font-family: 'JetBrains Mono'; font-size: 0.65em; background: rgba(56,189,248,0.1); color: var(--sky); padding: 2px 6px; border-radius: 4px; font-weight: 600; flex-shrink: 0;">GATEKEEPER</span>
+            </div>
+            <p style="font-size: 0.82em; color: var(--ink-dim); line-height: 1.5; margin: 0;">
+              Acts as the automated compliance gatekeeper. Any data synthesis pipeline execution that finishes with a composite scalar assessment value beneath the critical threshold (<span style="font-family:'JetBrains Mono'; color:var(--coral); font-weight:600;">CPUS &lt; 0.50</span>) drops down to a critical system failure state. Database release keys are instantly locked down until models are retrained.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <div class="section" id="summary">
-    <div class="sec-head"><span class="tag">02</span><h2>Aggregate Summary</h2><span class="hint">Balanced scheme · all models × datasets</span></div>
+    <div class="sec-head"><span class="tag">03</span><h2>Aggregate Summary</h2><span class="hint">Balanced scheme · all models × datasets</span></div>
     <div class="kpis">
       <div class="kpi"><div class="val">0.659</div><div class="lbl">Mean CPUS</div><div class="meter"><i style="width:65.9%"></i></div></div>
       <div class="kpi inv"><div class="val">0.561</div><div class="lbl">Mean ε̂ · lower better</div><div class="meter"><i style="width:18.7%"></i></div></div>
@@ -422,7 +723,7 @@ footer b{color:var(--ink-dim)}
   </div>
 
   <div class="section" id="studio">
-    <div class="sec-head"><span class="tag">03</span><h2>Interactive Chart Studio</h2><span class="hint">Pick any chart type, metric &amp; datasets</span></div>
+    <div class="sec-head"><span class="tag">04</span><h2>Interactive Chart Studio</h2><span class="hint">Pick any chart type, metric &amp; datasets</span></div>
     <div class="studio">
       <div class="controls">
         <div class="ctrl">
@@ -448,16 +749,26 @@ footer b{color:var(--ink-dim)}
         </div>
       </div>
       <div>
-        <div class="canvas-wrap"><canvas id="studioChart"></canvas></div>
+        <div class="canvas-wrap" style="position: relative;">
+          <button class="dashboard-popup-overlay" type="button">?</button>
+          <div class="dashboard-popup-content">
+            <strong>Interactive Chart Studio:</strong> This sandbox allows you to visualize multiple data privacy and model fidelity metrics across different synthetic generative models and datasets. Use the selectors to view custom metrics across various graph dimensions.
+          </div>
+          <canvas id="studioChart"></canvas>
+        </div>
         <p class="studio-note" id="studioNote"></p>
       </div>
     </div>
   </div>
 
   <div class="section" id="analytics">
-    <div class="sec-head"><span class="tag">04</span><h2>Governance Analytics</h2><span class="hint">Sensitivity · components · risk landscape</span></div>
+    <div class="sec-head"><span class="tag">05</span><h2>Governance Analytics</h2><span class="hint">Sensitivity · components · risk landscape</span></div>
     <div class="grid2">
-      <div class="panel">
+      <div class="panel" style="position: relative;">
+        <button class="dashboard-popup-overlay" type="button">?</button>
+        <div class="dashboard-popup-content">
+          <strong>Weighting-Scheme Sensitivity:</strong> Displays how the composite CPUS score changes under four distinct strategic weighting profiles. Models with flatter variations across categories demonstrate more balanced and resilient behavior.
+        </div>
         <div class="row">
           <div style="flex:1">
             <h3>Weighting-Scheme Sensitivity</h3>
@@ -467,17 +778,29 @@ footer b{color:var(--ink-dim)}
         </div>
         <canvas id="schemeChart"></canvas>
       </div>
-      <div class="panel">
+      <div class="panel" style="position: relative;">
+        <button class="dashboard-popup-overlay" type="button">?</button>
+        <div class="dashboard-popup-content">
+          <strong>CPUS Component Breakdown:</strong> Shows the individual contribution of the four variables making up the balanced composite score. A longer stack signifies better combined metrics.
+        </div>
         <h3>CPUS Component Breakdown</h3>
         <div class="sub">Weighted contribution of each term (Balanced · mean of datasets)</div>
         <canvas id="stackChart"></canvas>
       </div>
-      <div class="panel">
+      <div class="panel" style="position: relative;">
+        <button class="dashboard-popup-overlay" type="button">?</button>
+        <div class="dashboard-popup-content">
+          <strong>Privacy vs Utility Landscape:</strong> Maps the protective privacy elements along the horizontal axis and downstream accuracy along the vertical axis, with the bubble size representing the ultimate CPUS score.
+        </div>
         <h3>Privacy vs Utility Landscape</h3>
         <div class="sub">x = privacy protection · y = TSTR utility · bubble = CPUS</div>
         <canvas id="bubbleChart"></canvas>
       </div>
-      <div class="panel">
+      <div class="panel" style="position: relative;">
+        <button class="dashboard-popup-overlay" type="button">?</button>
+        <div class="dashboard-popup-content">
+          <strong>Compliance Distribution:</strong> Summarizes the legal outcome breakdown into three standard risk tier bands (Go Ahead, Review, No Go) based on international mandates.
+        </div>
         <h3>Compliance Distribution</h3>
         <div class="sub">All 60 model × dataset × scheme decisions</div>
         <canvas id="donutChart" style="max-height:300px"></canvas>
@@ -486,7 +809,7 @@ footer b{color:var(--ink-dim)}
   </div>
 
   <div class="section" id="results">
-    <div class="sec-head"><span class="tag">05</span><h2>Full Results Table</h2><span class="hint">Balanced scheme</span></div>
+    <div class="sec-head"><span class="tag">06</span><h2>Full Results Table</h2><span class="hint">Balanced scheme</span></div>
     <div class="tbl-controls">
       <input type="search" id="tblSearch" placeholder="Filter by dataset, model, or decision…">
     </div>
@@ -497,7 +820,7 @@ footer b{color:var(--ink-dim)}
   </div>
 
   <div class="section" id="figures">
-    <div class="sec-head"><span class="tag">06</span><h2>Pipeline Figures</h2><span class="hint">Original live-rendered interactive output dashboard</span></div>
+    <div class="sec-head"><span class="tag">07</span><h2>Pipeline Figures</h2><span class="hint">Original live-rendered interactive output dashboard</span></div>
     
     <div class="live-dashboard-grid">
       
@@ -528,7 +851,7 @@ footer b{color:var(--ink-dim)}
         <div class="dashboard-popup-content">
           <strong>Component Score Heatmap:</strong> Breaks down raw metric values into individual model vulnerability layers. Bright green indicates safe operational metrics; red states flag high vulnerability.
         </div>
-        <h4>Component Score Heatmap (Balanced Mean)</h4>
+        <h4>Component Score Heatmap (Balanced, mean across datasets)</h4>
         <div class="heatmap-container" style="margin-top: 15px;">
           <div class="heatmap-grid-wrapper">
             <div class="heatmap-header-row">
@@ -567,7 +890,7 @@ footer b{color:var(--ink-dim)}
   </div>
 
   <div class="section" id="reports">
-    <div class="sec-head"><span class="tag">07</span><h2>Narrative Reports &amp; Metadata</h2></div>
+    <div class="sec-head"><span class="tag">08</span><h2>Narrative Reports &amp; Metadata</h2></div>
     <details>
       <summary>Privacy &amp; Utility / Compliance / Summary Report</summary>
       <div class="inner"><pre>========================================================================
@@ -593,80 +916,6 @@ Synthea       GaussianCopula      0.994  0.132  0.955  0.965  0.761   GO AHEAD �
 Synthea       TVAE                0.902  0.230  0.901  0.972  0.751   GO AHEAD — Meets GDPR Recital 26 & NZPA 2020
 Synthea       CTGAN               0.808  0.152  0.905  0.902  0.692   REVIEW — Requires Privacy Officer Assessment
 Synthea       TabDDPM             0.983  0.005  0.714  0.982  0.671   REVIEW — Requires Privacy Officer Assessment
-
-========================================================================
-Metric orientation: all component scores higher = better.
-(1-ε̂): privacy from DP leakage  |  (1-MIA): resistance to inference attack
-(1-JSD): distributional fidelity  |  TSTR: downstream utility
-
-========================================================================
-  REGULATORY COMPLIANCE STATUS
-  GDPR Recital 26 (EU) | NZ Privacy Act 2020 IPP10
-========================================================================
-Dataset       Model             Scheme            CPUS  Decision
-------------------------------------------------------------------------
-UCI_Adult     CTGAN             Balanced         0.678  ~ REVIEW — Requires Privacy Officer Assessment
-UCI_Adult     CTGAN             Fidelity-Heavy   0.719  ✓ GO AHEAD — Meets GDPR Recital 26 & NZPA 2020
-UCI_Adult     CTGAN             Privacy-Heavy    0.602  ~ REVIEW — Requires Privacy Officer Assessment
-UCI_Adult     CTGAN             Utility-Heavy    0.753  ✓ GO AHEAD — Meets GDPR Recital 26 & NZPA 2020
-UCI_Adult     TVAE              Balanced         0.600  ~ REVIEW — Requires Privacy Officer Assessment
-UCI_Adult     TVAE              Fidelity-Heavy   0.649  ~ REVIEW — Requires Privacy Officer Assessment
-UCI_Adult     TVAE              Privacy-Heavy    0.504  ~ REVIEW — Requires Privacy Officer Assessment
-UCI_Adult     TVAE              Utility-Heavy    0.695  ~ REVIEW — Requires Privacy Officer Assessment
-UCI_Adult     GaussianCopula    Balanced         0.532  ~ REVIEW — Requires Privacy Officer Assessment
-UCI_Adult     GaussianCopula    Fidelity-Heavy   0.589  ~ REVIEW — Requires Privacy Officer Assessment
-UCI_Adult     GaussianCopula    Privacy-Heavy    0.426  ✗ NO GO — High Privacy Risk / Release Denied
-UCI_Adult     GaussianCopula    Utility-Heavy    0.638  ~ REVIEW — Requires Privacy Officer Assessment
-UCI_Adult     TabDDPM           Balanced         0.620  ~ REVIEW — Requires Privacy Officer Assessment
-UCI_Adult     TabDDPM           Fidelity-Heavy   0.641  ~ REVIEW — Requires Privacy Officer Assessment
-UCI_Adult     TabDDPM           Privacy-Heavy    0.562  ~ REVIEW — Requires Privacy Officer Assessment
-UCI_Adult     TabDDPM           Utility-Heavy    0.678  ~ REVIEW — Requires Privacy Officer Assessment
-UCI_Adult     Bootstrap         Balanced         0.838  ✓ GO AHEAD — Meets GDPR Recital 26 & NZPA 2020
-UCI_Adult     Bootstrap         Fidelity-Heavy   0.862  ✓ GO AHEAD — Meets GDPR Recital 26 & NZPA 2020
-UCI_Adult     Bootstrap         Privacy-Heavy    0.803  ✓ GO AHEAD — Meets GDPR Recital 26 & NZPA 2020
-UCI_Adult     Bootstrap         Utility-Heavy    0.873  ✓ GO AHEAD — Meets GDPR Recital 26 & NZPA 2020
-
-MIMIC_SYN     CTGAN             Balanced         0.483  ✗ NO GO — High Privacy Risk / Release Denied
-MIMIC_SYN     CTGAN             Fidelity-Heavy   0.536  ~ REVIEW — Requires Privacy Officer Assessment
-MIMIC_SYN     CTGAN             Privacy-Heavy    0.413  ✗ NO GO — High Privacy Risk / Release Denied
-MIMIC_SYN     CTGAN             Utility-Heavy    0.553  ~ REVIEW — Requires Privacy Officer Assessment
-MIMIC_SYN     TVAE              Balanced         0.345  ✗ NO GO — High Privacy Risk / Release Denied
-MIMIC_SYN     TVAE              Fidelity-Heavy   0.416  ✗ NO GO — High Privacy Risk / Release Denied
-MIMIC_SYN     TVAE              Privacy-Heavy    0.231  ✗ NO GO — High Privacy Risk / Release Denied
-MIMIC_SYN     TVAE              Utility-Heavy    0.459  ✗ NO GO — High Privacy Risk / Release Denied
-MIMIC_SYN     GaussianCopula    Balanced         0.684  ~ REVIEW — Requires Privacy Officer Assessment
-MIMIC_SYN     GaussianCopula    Fidelity-Heavy   0.714  ✓ GO AHEAD — Meets GDPR Recital 26 & NZPA 2020
-MIMIC_SYN     GaussianCopula    Privacy-Heavy    0.669  ~ REVIEW — Requires Privacy Officer Assessment
-MIMIC_SYN     GaussianCopula    Utility-Heavy    0.699  ~ REVIEW — Requires Privacy Officer Assessment
-MIMIC_SYN     TabDDPM           Balanced         0.589  ~ REVIEW — Requires Privacy Officer Assessment
-MIMIC_SYN     TabDDPM           Fidelity-Heavy   0.624  ~ REVIEW — Requires Privacy Officer Assessment
-MIMIC_SYN     TabDDPM           Privacy-Heavy    0.556  ~ REVIEW — Requires Privacy Officer Assessment
-MIMIC_SYN     TabDDPM           Utility-Heavy    0.622  ~ REVIEW — Requires Privacy Officer Assessment
-MIMIC_SYN     Bootstrap         Balanced         0.766  ✓ GO AHEAD — Meets GDPR Recital 26 & NZPA 2020
-MIMIC_SYN     Bootstrap         Fidelity-Heavy   0.784  ✓ GO AHEAD — Meets GDPR Recital 26 & NZPA 2020
-MIMIC_SYN     Bootstrap         Privacy-Heavy    0.777  ✓ GO AHEAD — Meets GDPR Recital 26 & NZPA 2020
-MIMIC_SYN     Bootstrap         Utility-Heavy    0.756  ✓ GO AHEAD — Meets GDPR Recital 26 & NZPA 2020
-
-Synthea       CTGAN             Balanced         0.692  ~ REVIEW — Requires Privacy Officer Assessment
-Synthea       CTGAN             Fidelity-Heavy   0.735  ✓ GO AHEAD — Meets GDPR Recital 26 & NZPA 2020
-Synthea       CTGAN             Privacy-Heavy    0.607  ~ REVIEW — Requires Privacy Officer Assessment
-Synthea       CTGAN             Utility-Heavy    0.777  ✓ GO AHEAD — Meets GDPR Recital 26 & NZPA 2020
-Synthea       TVAE              Balanced         0.751  ✓ GO AHEAD — Meets GDPR Recital 26 & NZPA 2020
-Synthea       TVAE              Fidelity-Heavy   0.784  ✓ GO AHEAD — Meets GDPR Recital 26 & NZPA 2020
-Synthea       TVAE              Privacy-Heavy    0.677  ~ REVIEW — Requires Privacy Officer Assessment
-Synthea       TVAE              Utility-Heavy    0.825  ✓ GO AHEAD — Meets GDPR Recital 26 & NZPA 2020
-Synthea       GaussianCopula    Balanced         0.761  ✓ GO AHEAD — Meets GDPR Recital 26 & NZPA 2020
-Synthea       GaussianCopula    Fidelity-Heavy   0.801  ✓ GO AHEAD — Meets GDPR Recital 26 & NZPA 2020
-Synthea       GaussianCopula    Privacy-Heavy    0.682  ~ REVIEW — Requires Privacy Officer Assessment
-Synthea       GaussianCopula    Utility-Heavy    0.841  ✓ GO AHEAD — Meets GDPR Recital 26 & NZPA 2020
-Synthea       TabDDPM           Balanced         0.671  ~ REVIEW — Requires Privacy Officer Assessment
-Synthea       TabDDPM           Fidelity-Heavy   0.693  ~ REVIEW — Requires Privacy Officer Assessment
-Synthea       TabDDPM           Privacy-Heavy    0.600  ~ REVIEW — Requires Privacy Officer Assessment
-Synthea       TabDDPM           Utility-Heavy    0.742  ✓ GO AHEAD — Meets GDPR Recital 26 & NZPA 2020
-Synthea       Bootstrap         Balanced         0.874  ✓ GO AHEAD — Meets GDPR Recital 26 & NZPA 2020
-Synthea       Bootstrap         Fidelity-Heavy   0.898  ✓ GO AHEAD — Meets GDPR Recital 26 & NZPA 2020
-Synthea       Bootstrap         Privacy-Heavy    0.825  ✓ GO AHEAD — Meets GDPR Recital 26 & NZPA 2020
-Synthea       Bootstrap         Utility-Heavy    0.923  ✓ GO AHEAD — Meets GDPR Recital 26 & NZPA 2020
 
 ========================================================================
 Thresholds: ≥0.70 GO AHEAD | 0.50–0.70 REVIEW | <0.50 NO GO
@@ -698,9 +947,9 @@ Thresholds: ≥0.70 GO AHEAD | 0.50–0.70 REVIEW | <0.50 NO GO
    Fidelity-Heavy  : best = Bootstrap (0.898)
 
 5. COMPLIANCE DISTRIBUTION (all schemes):
-   GO AHEAD  (Low Risk)    : 40.0%
-   REVIEW    (Moderate)    : 48.3%
-   NO GO     (High Risk)   : 11.7%
+   GO AHEAD  (Low Risk)     : 40.0%
+   REVIEW    (Moderate)     : 48.3%
+   NO GO     (High Risk)    : 11.7%
 
 6. REGULATORY FRAMING:
    Under GDPR Recital 26, data qualifies as "effectively anonymous"
@@ -774,7 +1023,7 @@ Thresholds: ≥0.70 GO AHEAD | 0.50–0.70 REVIEW | <0.50 NO GO
   </div>
 
   <div class="section" id="contact">
-    <div class="sec-head"><span class="tag">08</span><h2>Contact</h2><span class="hint">Advisory · Research Collaboration . Building Dashboards</span></div>
+    <div class="sec-head"><span class="tag">09</span><h2>Contact</h2><span class="hint">Advisory · Research Collaboration . Building Dashboards</span></div>
     <div class="contact-grid">
       <div>
         <div class="contact-title">Let's Build Something <em>Together</em></div>
@@ -1182,9 +1431,9 @@ function renderTable(filterText){
 document.getElementById("tblSearch").addEventListener("input", (e) => renderTable(e.target.value));
 
 
-/* =========================================================================
+/* ========================================================================
    =================== NEW LIVE DASHBOARD IMPLEMENTATION ==================
-   ========================================================================= */
+   ======================================================================== */
 let liveBarChart = null;
 let liveLineChart = null;
 let livePieChart = null;
@@ -1196,7 +1445,7 @@ function buildLiveHeatmap() {
   
   // Normalized metrics based on image profile logic
   const matrixData = [
-    { name: "CTGAN",          vals: [0.75, 0.10, 0.88, 0.74] },
+    { name: "CTGAN",         vals: [0.75, 0.10, 0.88, 0.74] },
     { name: "TVAE",           vals: [0.56, 0.10, 0.84, 0.76] },
     { name: "GaussianCopula", vals: [0.81, 0.17, 0.91, 0.74] },
     { name: "TabDDPM",         vals: [0.97, 0.02, 0.75, 0.77] },
@@ -1215,7 +1464,7 @@ function buildLiveHeatmap() {
       let pct = (v - 0.5) / 0.5;
       r = Math.round(254 + (21 - 254) * pct);
       g = Math.round(240 + (128 - 240) * pct);
-      b = Math.round(138 + (61 - 138) * pct);
+      b = Math.round(21 + (61 - 21) * pct);
     }
     return `rgb(${r}, ${g}, ${b})`;
   }
@@ -1440,6 +1689,64 @@ document.addEventListener('click', function() {
     el.classList.remove('active');
   });
 });
+
+/* ===================== AUTOMATED PIPELINE STEP FLOW ENGINE ===================== */
+(function animatePipelineFlow() {
+  const steps = [
+    { type: 'block', id: 'wf-step-1' },
+    { type: 'con',   id: 'wf-con-1' },
+    { type: 'block', id: 'wf-step-2' },
+    { type: 'fork',  id: 'wf-fork-3', mobileId: 'wf-con-3-mobile' },
+    { type: 'block', id: 'wf-step-3' },
+    { type: 'con',   id: 'wf-con-3' },
+    { type: 'block', id: 'wf-step-4' },
+    { type: 'con',   id: 'wf-con-4' },
+    { type: 'block', id: 'wf-step-5' },
+    { type: 'block', id: 'wf-step-6' }
+  ];
+
+  let currentIdx = 0;
+  const stepDuration = 1800; // time in ms spent performing each block or conduit transition
+
+  function processNextStep() {
+    // 1. Wipe all previous state classes across the entire pipeline
+    steps.forEach(s => {
+      const el = document.getElementById(s.id);
+      if (el) {
+        el.classList.remove('processing-active', 'pulse-active');
+      }
+      if (s.mobileId) {
+        const mEl = document.getElementById(s.mobileId);
+        if (mEl) mEl.classList.remove('pulse-active');
+      }
+    });
+
+    // 2. Fetch current active link configuration profile
+    const currentStep = steps[currentIdx];
+    const targetElement = document.getElementById(currentStep.id);
+
+    if (targetElement) {
+      if (currentStep.type === 'block') {
+        targetElement.classList.add('processing-active');
+      } else if (currentStep.type === 'con' || currentStep.type === 'fork') {
+        targetElement.classList.add('pulse-active');
+        if (currentStep.mobileId) {
+          const mEl = document.getElementById(currentStep.mobileId);
+          if (mEl) mEl.classList.add('pulse-active');
+        }
+      }
+    }
+
+    // 3. Increment pointer array loop index
+    currentIdx = (currentIdx + 1) % steps.length;
+    setTimeout(processNextStep, stepDuration);
+  }
+
+  // Initialize execution loop on framework layout load
+  window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(processNextStep, 600);
+  });
+})();
 </script>
 </body>
 </html>
