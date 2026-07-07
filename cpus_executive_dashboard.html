@@ -211,7 +211,7 @@ a.contact-link:hover{border-color:rgba(45,212,191,.45);color:var(--teal);transfo
 .form-status.ok{color:var(--go);background:rgba(52,211,153,.08);border-color:rgba(52,211,153,.3)}
 .form-status.bad{color:var(--nogo);background:rgba(251,113,133,.08);border-color:rgba(251,113,133,.3)}
 .back-top{position:fixed;right:22px;bottom:22px;width:44px;height:44px;border-radius:12px;background:var(--grad);
-  color:#06231f;font-size:1.15em;font-weight:800;display:grid;place-items:center;box-shadow:var(--shadow);
+  color:#06231f;font-weight:800;display:grid;place-items:center;box-shadow:var(--shadow);
   border:none;cursor:pointer;opacity:0;pointer-events:none;transition:.25s;z-index:60}
 .back-top.show{opacity:1;pointer-events:auto}
 .back-top:hover{transform:translateY(-3px)}
@@ -307,13 +307,14 @@ footer b{color:var(--ink-dim)}
   padding-left: 4px;
 }
 
-/* Custom Interactive Hover Overlay Style */
+/* Custom Interactive Click Overlay Style */
 .dashboard-popup-overlay {
   position: absolute;
   top: 12px;
   right: 12px;
   background: var(--teal);
   color: #06231f;
+  border: none;
   border-radius: 99px;
   width: 22px;
   height: 22px;
@@ -322,7 +323,7 @@ footer b{color:var(--ink-dim)}
   justify-content: center;
   font-weight: bold;
   font-size: 0.8em;
-  cursor: help;
+  cursor: pointer;
   z-index: 10;
 }
 .dashboard-popup-content {
@@ -341,8 +342,7 @@ footer b{color:var(--ink-dim)}
   color: var(--ink);
   line-height: 1.4;
 }
-.live-dashboard-box:hover .dashboard-popup-content,
-.dashboard-popup-overlay:hover + .dashboard-popup-content {
+.dashboard-popup-content.active {
   display: block;
 }
 </style>
@@ -502,7 +502,7 @@ footer b{color:var(--ink-dim)}
     <div class="live-dashboard-grid">
       
       <div class="live-dashboard-box">
-        <div class="dashboard-popup-overlay">?</div>
+        <button class="dashboard-popup-overlay" type="button">?</button>
         <div class="dashboard-popup-content">
           <strong>CPUS by Model & Dataset:</strong> This chart scales composite governance performance metrics from 0 to 1 across all 5 key evaluated frameworks. Dotted lines flag regulatory safety benchmarks (GO / REVIEW thresholds).
         </div>
@@ -513,7 +513,7 @@ footer b{color:var(--ink-dim)}
       </div>
 
       <div class="live-dashboard-box">
-        <div class="dashboard-popup-overlay">?</div>
+        <button class="dashboard-popup-overlay" type="button">?</button>
         <div class="dashboard-popup-content">
           <strong>Sensitivity Analysis:</strong> Tracks stability across targeted operational profiles (Balanced, Privacy-Heavy, Utility-Heavy, Fidelity-Heavy). Flat trajectories indicate robust, weight-invariant security.
         </div>
@@ -524,18 +524,18 @@ footer b{color:var(--ink-dim)}
       </div>
 
       <div class="live-dashboard-box">
-        <div class="dashboard-popup-overlay">?</div>
+        <button class="dashboard-popup-overlay" type="button">?</button>
         <div class="dashboard-popup-content">
           <strong>Component Score Heatmap:</strong> Breaks down raw metric values into individual model vulnerability layers. Bright green indicates safe operational metrics; red states flag high vulnerability.
         </div>
-        <h4>Component Score Heatmap (Balanced, mean across datasets)</h4>
+        <h4>Component Score Heatmap (Balanced Mean)</h4>
         <div class="heatmap-container" style="margin-top: 15px;">
           <div class="heatmap-grid-wrapper">
             <div class="heatmap-header-row">
               <div></div>
               <div>1 - ε̂<br><small>(DP Privacy)</small></div>
               <div>1 - MIA<br><small>(Inference)</small></div>
-              <div>1 - JSD -> 0<br><small>(Fidelity)</small></div>
+              <div>1 - JSD -&gt; 0<br><small>(Fidelity)</small></div>
               <div>TSTR<br><small>(Utility)</small></div>
             </div>
             
@@ -553,7 +553,7 @@ footer b{color:var(--ink-dim)}
       </div>
 
       <div class="live-dashboard-box">
-        <div class="dashboard-popup-overlay">?</div>
+        <button class="dashboard-popup-overlay" type="button">?</button>
         <div class="dashboard-popup-content">
           <strong>Compliance Decision Distribution:</strong> Aggregated strategic outcome slice of all combinations of evaluated systems. Shows safe configurations vs. elements requiring executive override (Review / No Go status).
         </div>
@@ -802,6 +802,7 @@ Thresholds: ≥0.70 GO AHEAD | 0.50–0.70 REVIEW | <0.50 NO GO
             <div class="err">Please enter a valid email</div>
           </div>
         </div>
+        <div class="form-row">
         <div class="form-group" id="fg-subject">
           <label for="c-subject">Subject</label>
           <input type="text" id="c-subject" name="subject" placeholder="What's this about?" required>
@@ -1181,9 +1182,9 @@ function renderTable(filterText){
 document.getElementById("tblSearch").addEventListener("input", (e) => renderTable(e.target.value));
 
 
-/* ========================================================================
+/* =========================================================================
    =================== NEW LIVE DASHBOARD IMPLEMENTATION ==================
-   ======================================================================== */
+   ========================================================================= */
 let liveBarChart = null;
 let liveLineChart = null;
 let livePieChart = null;
@@ -1281,14 +1282,7 @@ function renderLiveDashboardCharts() {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
-        legend: { labels: { color: C.dim } },
-        // Draw threshold lines across chart
-        annotation: {
-          annotations: {
-            goLine: { type: 'line', yMin: 0.7, borderColor: C.go, borderWidth: 1.5, borderDash: [4, 4] },
-            reviewLine: { type: 'line', yMin: 0.5, borderColor: C.rev, borderWidth: 1.5, borderDash: [4, 4] }
-          }
-        }
+        legend: { labels: { color: C.dim } }
       },
       scales: {
         x: { grid: { display: false }, ticks: { color: C.dim } },
@@ -1424,6 +1418,28 @@ renderLiveDashboardCharts();
   window.addEventListener('scroll',()=>bt.classList.toggle('show',window.scrollY>600),{passive:true});
   bt.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
 })();
+
+/* ===================== CLICK TRIGGER INTERACTIVITY ===================== */
+document.querySelectorAll('.dashboard-popup-overlay').forEach(button => {
+  button.addEventListener('click', function(e) {
+    e.stopPropagation();
+    const content = this.nextElementSibling;
+    
+    // Close any other open popups first
+    document.querySelectorAll('.dashboard-popup-content').forEach(el => {
+      if (el !== content) el.classList.remove('active');
+    });
+    
+    content.classList.toggle('active');
+  });
+});
+
+// Close open popup content if clicking outside anywhere on the window
+document.addEventListener('click', function() {
+  document.querySelectorAll('.dashboard-popup-content').forEach(el => {
+    el.classList.remove('active');
+  });
+});
 </script>
 </body>
 </html>
