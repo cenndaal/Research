@@ -158,7 +158,7 @@ a{color:var(--teal);text-decoration:none}
 
 /* ---------- KPI cards ---------- */
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
-.kpi{background:var(--bg2);border:1px solid var(--card-edge);border-radius:14px;padding:18px 18px 16px;position:relative;overflow:hidden}
+.kpi{background:var(--bg2);border:1px solid var(--card-edge);border-radius:14px;padding:18px 18px 166;position:relative;overflow:hidden}
 .kpi::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:var(--grad);opacity:.8}
 .kpi .val{font-family:'Sora';font-size:1.9em;font-weight:800;letter-spacing:-.5px}
 .kpi .lbl{font-size:.72em;color:var(--ink-dim);margin-top:3px;font-weight:600}
@@ -248,20 +248,25 @@ pre::-webkit-scrollbar-thumb, .tbl-wrap::-webkit-scrollbar-thumb { background:va
 a.contact-link:hover{border-color:rgba(45,212,191,.45);color:var(--teal);transform:translateX(4px)}
 .contact-link-icon{width:34px;height:34px;border-radius:10px;background:rgba(45,212,191,.1);
   border:1px solid rgba(45,212,191,.25);display:grid;place-items:center;font-size:1em;flex:none}
+
+/* ---------- UPDATED CONTACT FORM STYLES ---------- */
 .contact-form{background:var(--bg2);border:1px solid var(--card-edge);border-radius:14px;padding:24px}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-@media(max-width:640px){.form-row{grid-template-columns:1fr}}
-.form-group{margin-bottom:14px}
+.form-layout-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:stretch}
+@media(max-width:640px){.form-layout-grid{grid-template-columns:1fr}}
+.form-left-col{display:flex;flex-direction:column;gap:14px}
+.form-right-col{display:flex;flex-direction:column}
+.form-group{margin-bottom:0}
+.form-group.msg-group{flex-grow:1;display:flex;flex-direction:column}
 .form-group label{display:block;font-size:.68em;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:7px}
 .form-group input,.form-group textarea{width:100%;background:var(--card);color:var(--ink);border:1px solid var(--card-edge);
   border-radius:10px;padding:11px 13px;font-family:'Manrope';font-size:.9em;outline:none;transition:.2s}
 .form-group input:focus,.form-group textarea:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(45,212,191,.12)}
-.form-group textarea{min-height:120px;resize:vertical}
+.form-group textarea{flex-grow:1;min-height:140px;resize:none}
 .form-group .err{display:none;font-size:.74em;color:var(--coral);margin-top:5px;font-weight:600}
 .form-group.error input,.form-group.error textarea{border-color:var(--coral)}
 .form-group.error .err{display:block}
 .submit-btn{font-family:'Sora';font-weight:700;font-size:.9em;color:#06231f;background:var(--grad);
-  border:none;border-radius:99px;padding:13px 30px;cursor:pointer;transition:.2s;display:inline-flex;align-items:center;gap:8px}
+  border:none;border-radius:10px;height:35px;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:8px;width:100%}
 .submit-btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
 .submit-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
 .form-status{display:none;margin-top:14px;padding:12px 16px;border-radius:10px;font-size:.84em;font-weight:600;border:1px solid}
@@ -1039,30 +1044,42 @@ Thresholds: ≥0.70 GO AHEAD | 0.50–0.70 REVIEW | <0.50 NO GO
         </div>
       </div>
       <form class="contact-form" id="contact-form" novalidate>
-        <div class="form-row">
-          <div class="form-group" id="fg-name">
-            <label for="c-name">Your Name</label>
-            <input type="text" id="c-name" name="name" placeholder="Jane Smith" autocomplete="name" required>
-            <div class="err">Please enter your name</div>
+        <div class="form-layout-grid">
+          
+          <div class="form-left-col">
+            <div class="form-group" id="fg-name">
+              <label for="c-name">Your Name</label>
+              <input type="text" id="c-name" name="name" placeholder="Jane Smith" autocomplete="name" required>
+              <div class="err">Please enter your name</div>
+            </div>
+            
+            <div class="form-group" id="fg-email">
+              <label for="c-email">Email</label>
+              <input type="email" id="c-email" name="email" placeholder="you@company.com" autocomplete="email" required>
+              <div class="err">Please enter a valid email</div>
+            </div>
+
+            <div class="form-group" id="fg-subject">
+              <label for="c-subject">Subject</label>
+              <input type="text" id="c-subject" name="subject" placeholder="What's this about?" required>
+              <div class="err">Please enter a subject</div>
+            </div>
           </div>
-          <div class="form-group" id="fg-email">
-            <label for="c-email">Email</label>
-            <input type="email" id="c-email" name="email" placeholder="you@company.com" autocomplete="email" required>
-            <div class="err">Please enter a valid email</div>
+          
+          <div class="form-right-col">
+            <div class="form-group msg-group" id="fg-message">
+              <label for="c-message">Message</label>
+              <textarea id="c-message" name="message" placeholder="Tell me about your project, role or idea..."></textarea>
+              <div class="err">Please enter a message</div>
+            </div>
           </div>
+
         </div>
-        <div class="form-row">
-        <div class="form-group" id="fg-subject">
-          <label for="c-subject">Subject</label>
-          <input type="text" id="c-subject" name="subject" placeholder="What's this about?" required>
-          <div class="err">Please enter a subject</div>
+
+        <div style="margin-top: 60px;">
+          <button type="submit" class="submit-btn" id="submit-btn">Send Message <span aria-hidden="true">→</span></button>
         </div>
-        <div class="form-group" id="fg-message">
-          <label for="c-message">Message</label>
-          <textarea id="c-message" name="message" placeholder="Tell me about your project, role or idea..."></textarea>
-          <div class="err">Please enter a message</div>
-        </div>
-        <button type="submit" class="submit-btn" id="submit-btn">Send Message <span aria-hidden="true">→</span></button>
+        
         <div class="form-status ok" id="form-success">✓ Message sent successfully! I'll get back to you within 24 hours.</div>
         <div class="form-status bad" id="form-error">⚠ Something went wrong while sending your message. Please try again or email me directly.</div>
       </form>
@@ -1097,7 +1114,7 @@ Thresholds: ≥0.70 GO AHEAD | 0.50–0.70 REVIEW | <0.50 NO GO
   btnLight.addEventListener('click', () => applyTheme('light', true));
 })();
 
-const DATA = [{"dataset": "MIMIC_SYN", "model": "Bootstrap", "eps": 0.0892, "mia": 0.3855, "jsd": 0.0293, "tstr": 0.51, "cpus": 0.7663, "risk": "Low Risk", "decision": "GO AHEAD"}, {"dataset": "MIMIC_SYN", "model": "GaussianCopula", "eps": 0.2687, "mia": 0.6178, "jsd": 0.0569, "tstr": 0.5, "cpus": 0.6839, "risk": "Moderate Risk", "decision": "REVIEW"}, {"dataset": "MIMIC_SYN", "model": "TabDDPM", "eps": 0.0865, "mia": 0.9572, "jsd": 0.1493, "tstr": 0.4925, "cpus": 0.5893, "risk": "Moderate Risk", "decision": "REVIEW"}, {"dataset": "MIMIC_SYN", "model": "CTGAN", "eps": 1.4328, "mia": 0.9074, "jsd": 0.1599, "tstr": 0.4775, "cpus": 0.4831, "risk": "High Risk", "decision": "NO GO"}, {"dataset": "MIMIC_SYN", "model": "TVAE", "eps": 2.7495, "mia": 0.9634, "jsd": 0.2258, "tstr": 0.485, "cpus": 0.3448, "risk": "High Risk", "decision": "NO GO"}, {"dataset": "Synthea", "model": "Bootstrap", "eps": 0.0205, "mia": 0.4894, "jsd": 0.0077, "tstr": 1.0, "cpus": 0.874, "risk": "Low Risk", "decision": "GO AHEAD"}, {"dataset": "Synthea", "model": "GaussianCopula", "eps": 0.0184, "mia": 0.8679, "jsd": 0.0451, "tstr": 0.9649, "cpus": 0.7614, "risk": "Low Risk", "decision": "GO AHEAD"}, {"dataset": "Synthea", "model": "TVAE", "eps": 0.2945, "mia": 0.7705, "jsd": 0.0992, "tstr": 0.9717, "cpus": 0.751, "risk": "Low Risk", "decision": "GO AHEAD"}, {"dataset": "Synthea", "model": "CTGAN", "eps": 0.5748, "mia": 0.8475, "jsd": 0.0948, "tstr": 0.9021, "cpus": 0.692, "risk": "Moderate Risk", "decision": "REVIEW"}, {"dataset": "Synthea", "model": "TabDDPM", "eps": 0.0522, "mia": 0.9953, "jsd": 0.2857, "tstr": 0.982, "cpus": 0.671, "risk": "Moderate Risk", "decision": "REVIEW"}, {"dataset": "UCI_Adult", "model": "Bootstrap", "eps": 0.561, "mia": 0.521, "jsd": 0.007, "tstr": 0.857, "cpus": 0.838, "risk": "Low Risk", "decision": "GO AHEAD"}, {"dataset": "UCI_Adult", "model": "CTGAN", "eps": 0.266, "mia": 0.933, "jsd": 0.096, "tstr": 0.828, "cpus": 0.678, "risk": "Moderate Risk", "decision": "REVIEW"}, {"dataset": "UCI_Adult", "model": "TabDDPM", "eps": 0.152, "mia": 1.0, "jsd": 0.318, "tstr": 0.85, "cpus": 0.62, "risk": "Moderate Risk", "decision": "REVIEW"}, {"dataset": "UCI_Adult", "model": "TVAE", "eps": 0.954, "mia": 0.96, "jsd": 0.15, "tstr": 0.827, "cpus": 0.6, "risk": "Moderate Risk", "decision": "REVIEW"}, {"dataset": "UCI_Adult", "model": "GaussianCopula", "eps": 1.401, "mia": 0.998, "jsd": 0.165, "tstr": 0.758, "cpus": 0.532, "risk": "Moderate Risk", "decision": "REVIEW"}];
+const DATA = [{"dataset": "MIMIC_SYN", "model": "Bootstrap", "eps": 0.0892, "mia": 0.3855, "jsd": 0.0293, "tstr": 0.5, "cpus": 0.7663, "risk": "Low Risk", "decision": "GO AHEAD"}, {"dataset": "MIMIC_SYN", "model": "GaussianCopula", "eps": 0.2687, "mia": 0.6178, "jsd": 0.0569, "tstr": 0.5, "cpus": 0.6839, "risk": "Moderate Risk", "decision": "REVIEW"}, {"dataset": "MIMIC_SYN", "model": "TabDDPM", "eps": 0.0865, "mia": 0.9572, "jsd": 0.1493, "tstr": 0.4925, "cpus": 0.5893, "risk": "Moderate Risk", "decision": "REVIEW"}, {"dataset": "MIMIC_SYN", "model": "CTGAN", "eps": 1.4328, "mia": 0.9074, "jsd": 0.1599, "tstr": 0.4775, "cpus": 0.4831, "risk": "High Risk", "decision": "NO GO"}, {"dataset": "MIMIC_SYN", "model": "TVAE", "eps": 2.7495, "mia": 0.9634, "jsd": 0.2258, "tstr": 0.485, "cpus": 0.3448, "risk": "High Risk", "decision": "NO GO"}, {"dataset": "Synthea", "model": "Bootstrap", "eps": 0.0205, "mia": 0.4894, "jsd": 0.0077, "tstr": 1.0, "cpus": 0.874, "risk": "Low Risk", "decision": "GO AHEAD"}, {"dataset": "Synthea", "model": "GaussianCopula", "eps": 0.0184, "mia": 0.8679, "jsd": 0.0451, "tstr": 0.9649, "cpus": 0.7614, "risk": "Low Risk", "decision": "GO AHEAD"}, {"dataset": "Synthea", "model": "TVAE", "eps": 0.2945, "mia": 0.7705, "jsd": 0.0992, "tstr": 0.9717, "cpus": 0.751, "risk": "Low Risk", "decision": "GO AHEAD"}, {"dataset": "Synthea", "model": "CTGAN", "eps": 0.5748, "mia": 0.8475, "jsd": 0.0948, "tstr": 0.9021, "cpus": 0.692, "risk": "Moderate Risk", "decision": "REVIEW"}, {"dataset": "Synthea", "model": "TabDDPM", "eps": 0.0522, "mia": 0.9953, "jsd": 0.2857, "tstr": 0.982, "cpus": 0.671, "risk": "Moderate Risk", "decision": "REVIEW"}, {"dataset": "UCI_Adult", "model": "Bootstrap", "eps": 0.561, "mia": 0.521, "jsd": 0.007, "tstr": 0.857, "cpus": 0.838, "risk": "Low Risk", "decision": "GO AHEAD"}, {"dataset": "UCI_Adult", "model": "CTGAN", "eps": 0.266, "mia": 0.933, "jsd": 0.096, "tstr": 0.828, "cpus": 0.678, "risk": "Moderate Risk", "decision": "REVIEW"}, {"dataset": "UCI_Adult", "model": "TabDDPM", "eps": 0.152, "mia": 1.0, "jsd": 0.318, "tstr": 0.85, "cpus": 0.62, "risk": "Moderate Risk", "decision": "REVIEW"}, {"dataset": "UCI_Adult", "model": "TVAE", "eps": 0.954, "mia": 0.96, "jsd": 0.15, "tstr": 0.827, "cpus": 0.6, "risk": "Moderate Risk", "decision": "REVIEW"}, {"dataset": "UCI_Adult", "model": "GaussianCopula", "eps": 1.401, "mia": 0.998, "jsd": 0.165, "tstr": 0.758, "cpus": 0.532, "risk": "Moderate Risk", "decision": "REVIEW"}];
 const SCHEMES = {"UCI_Adult": {"CTGAN": [0.678, 0.719, 0.602, 0.753], "TVAE": [0.6, 0.649, 0.504, 0.695], "GaussianCopula": [0.532, 0.589, 0.426, 0.638], "TabDDPM": [0.62, 0.641, 0.562, 0.678], "Bootstrap": [0.838, 0.862, 0.803, 0.873]}, "MIMIC_SYN": {"CTGAN": [0.483, 0.536, 0.413, 0.553], "TVAE": [0.345, 0.416, 0.231, 0.459], "GaussianCopula": [0.684, 0.714, 0.669, 0.699], "TabDDPM": [0.589, 0.624, 0.556, 0.622], "Bootstrap": [0.766, 0.784, 0.777, 0.756]}, "Synthea": {"CTGAN": [0.692, 0.735, 0.607, 0.777], "TVAE": [0.751, 0.784, 0.677, 0.825], "GaussianCopula": [0.761, 0.801, 0.682, 0.841], "TabDDPM": [0.671, 0.693, 0.6, 0.742], "Bootstrap": [0.874, 0.898, 0.825, 0.923]}};
 const MODELS = ["Bootstrap","GaussianCopula","TVAE","CTGAN","TabDDPM"];
 const DATASETS = ["UCI_Adult","MIMIC_SYN","Synthea"];
@@ -1445,8 +1462,8 @@ function buildLiveHeatmap() {
   
   // Normalized metrics based on image profile logic
   const matrixData = [
-    { name: "CTGAN",         vals: [0.75, 0.10, 0.88, 0.74] },
-    { name: "TVAE",           vals: [0.56, 0.10, 0.84, 0.76] },
+    { name: "CTGAN",        vals: [0.75, 0.10, 0.88, 0.74] },
+    { name: "TVAE",         vals: [0.56, 0.10, 0.84, 0.76] },
     { name: "GaussianCopula", vals: [0.81, 0.17, 0.91, 0.74] },
     { name: "TabDDPM",         vals: [0.97, 0.02, 0.75, 0.77] },
     { name: "Bootstrap",      vals: [0.98, 0.55, 0.99, 0.79] }
